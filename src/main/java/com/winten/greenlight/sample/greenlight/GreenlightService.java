@@ -30,6 +30,7 @@ public class GreenlightService {
             return true;
         }
 
+        // 토큰 추출
         String tokenFromCookie = null;
         var paramMap = request.getParameterMap();
         if (paramMap.get("g") != null && (paramMap.get("g").length > 0)) {
@@ -39,45 +40,42 @@ public class GreenlightService {
             tokenFromCookie = readCookie(request, TOKEN_COOKIE_NAME);
         }
 
-        // 대기열 대기요청 API 헤더 세팅
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        // 토큰이 있다면 검증 시도
         if (tokenFromCookie != null && !tokenFromCookie.isBlank()) {
+            // 대기열 대기요청 API 헤더 세팅
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             headers.add(TOKEN_COOKIE_NAME, tokenFromCookie); // X-GREENLIGHT-TOKEN 헤더
-        }
 
-        // 현재 URL 전달
-        Map<String, String> body = new HashMap<>();
-        HttpEntity<Map<String, String>> httpEntity = new HttpEntity<>(body, headers);
+            // 현재 URL 전달
+            Map<String, String> body = new HashMap<>();
+            HttpEntity<Map<String, String>> httpEntity = new HttpEntity<>(body, headers);
 
-        ResponseEntity<QueueCheckResponse> res;
-        try {
-            // 대기열 대기요청 API 호출
-             res = restTemplate.postForEntity(
-                    GREENLIGHT_BASE + "/api/v1/customer/verify",
-                    httpEntity,
-                    QueueCheckResponse.class
-            );
-        } catch (HttpClientErrorException.NotFound e) {
-            return true; // 대기 대상이 아닌 경우
-        }
+            ResponseEntity<QueueCheckResponse> res = null;
+            try {
+                // 대기열 대기요청 API 호출
+                res = restTemplate.postForEntity(
+                        GREENLIGHT_BASE + "/api/v1/customer/verify",
+                        httpEntity,
+                        QueueCheckResponse.class
+                );
+            } catch (Exception e) {}
 
-        if (!res.getStatusCode().is2xxSuccessful() || res.getBody() == null) {
-            return true; // API 실패 시 기존 로직 유지
-        }
+            if (res != null && res.getBody() != null) {
+                QueueCheckResponse result = res.getBody();
+                if (result.getVerified()) {
+                    return true;
+                }
+            }
+            }
 
-        QueueCheckResponse result = res.getBody();
-        if (!result.getVerified()) {
-            String landingId = "0NFXE62QE2XCA";
-            String currentUrl = buildCurrentUrl(request);
-            // destinationUrl이 있으면 우선 사용, 없으면 현재 URL로 복귀하도록 redirect 파라미터로 전달(구현 환경에 맞게 조정)
-            String redirectTo = "https://greenlight.hyundai-ite.com/l/" + landingId + "?redirectUrl=" + URLEncoder.encode(currentUrl, StandardCharsets.UTF_8); // WAITING인 상태라면 대기화면으로 이동
-            response.sendRedirect(redirectTo);
-            return false; // 더 이상 체인 진행 안 함
-        }
-
-        return true;
+        String landingId = "0NFXE62QE2XCA";
+        String currentUrl = buildCurrentUrl(request);
+        // destinationUrl이 있으면 우선 사용, 없으면 현재 URL로 복귀하도록 redirect 파라미터로 전달(구현 환경에 맞게 조정)
+        String redirectTo = "https://greenlight.hyundai-ite.com/l/" + landingId + "?redirectUrl=" + URLEncoder.encode(currentUrl, StandardCharsets.UTF_8); // WAITING인 상태라면 대기화면으로 이동
+        response.sendRedirect(redirectTo);
+        return false; // 더 이상 체인 진행 안 함
     }
 
     private boolean isGreenlightRequired(HttpServletRequest request) {

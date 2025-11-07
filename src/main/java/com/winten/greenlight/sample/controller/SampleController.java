@@ -11,8 +11,6 @@ import java.util.Map;
 @Controller
 @RequestMapping
 public class SampleController {
-    @Value("${greenlight.api.core.url}")
-    private String coreApiUrl;
 
     private Map<String, String> itemMap = Map.of(
             "40A000001", "상품A",
@@ -48,12 +46,6 @@ public class SampleController {
     @PostMapping("/orderComplete")
     public String orderComplete() {
         return "orderComplete";
-    }
-
-    @GetMapping("/waitingTest")
-    public String waitingTest(Model model) {
-        model.addAttribute("coreApiUrl", coreApiUrl);
-        return "waitingTest";
     }
   
     @GetMapping("/event")
