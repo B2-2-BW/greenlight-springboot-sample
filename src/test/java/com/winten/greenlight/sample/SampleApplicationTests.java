@@ -1,10 +1,10 @@
-package com.winten.greenlight.thehyundaisample;
+package com.winten.greenlight.sample;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ThehyundaisampleApplicationTests {
+class SampleApplicationTests {
 
     @Test
     void contextLoads() {

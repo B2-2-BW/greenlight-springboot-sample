@@ -1,6 +1,6 @@
-package com.winten.greenlight.thehyundaisample.config;
+package com.winten.greenlight.sample.config;
 
-import com.winten.greenlight.thehyundaisample.interceptor.SampleInterceptor;
+import com.winten.greenlight.sample.interceptor.SampleInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

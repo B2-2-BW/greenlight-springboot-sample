@@ -1,8 +1,5 @@
-package com.winten.greenlight.thehyundaisample.greenlight.dto;
+package com.winten.greenlight.sample.greenlight;
 
-/**
- * @version 1.0
- */
 public enum WaitStatus {
     /**
      * 대기 중: 현재 대기열에서 자신의 순서를 기다리는 상태입니다.
@@ -11,8 +8,6 @@ public enum WaitStatus {
 
     /**
      * 입장 허용: 자신의 순서가 되어 입장이 허용된 상태입니다.
-     *
-     *
      */
     READY("입장 가능"),
 

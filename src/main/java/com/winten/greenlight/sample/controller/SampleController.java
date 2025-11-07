@@ -1,4 +1,4 @@
-package com.winten.greenlight.thehyundaisample.controller;
+package com.winten.greenlight.sample.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;

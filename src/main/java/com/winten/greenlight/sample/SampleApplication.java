@@ -1,4 +1,4 @@
-package com.winten.greenlight.thehyundaisample;
+package com.winten.greenlight.sample;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,14 +10,14 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 @EnableCaching
-public class ThehyundaisampleApplication extends SpringBootServletInitializer {
+public class SampleApplication extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return builder.sources(ThehyundaisampleApplication.class);
+        return builder.sources(SampleApplication.class);
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(ThehyundaisampleApplication.class, args);
+        SpringApplication.run(SampleApplication.class, args);
     }
 
 }

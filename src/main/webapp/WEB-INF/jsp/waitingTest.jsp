@@ -27,10 +27,10 @@
             window.location.href = '/itemPtc?slitmCd=40A000001'
         }
         window.addEventListener('beforeunload', function () {
-            let token = getCookie('X-GREENLIGHT-TOKEN');
-            const data = JSON.stringify({g: token});
-            const blob = new Blob([data], { type: 'application/json' });
-            navigator.sendBeacon('${coreApiUrl}/api/v1/customer/leave', blob);
+            // let token = getCookie('X-GREENLIGHT-TOKEN');
+            // const data = JSON.stringify({g: token});
+            // const blob = new Blob([data], { type: 'application/json' });
+            navigator.sendBeacon('${coreApiUrl}/api/v1/customer/leave', {});
         });
     </script>
 </head>
