@@ -19,8 +19,8 @@ import java.util.Set;
 
 @Slf4j
 public class GreenlightService {
-    private static final String TOKEN_COOKIE_NAME = "X-GREENLIGHT-TOKEN"; // greenlight token 쿠기명, 고정값
-    private static final String TOKEN_QUERY_KEY = "gUserId"; // greenlight 토큰 쿼리명, 고정값
+    private static final String ID_COOKIE_NAME = "X-GREENLIGHT-ID"; // greenlight ID 쿠기명, 고정값
+    private static final String ID_QUERY_KEY = "gUserId"; // greenlight ID 쿼리명, 고정값
     private static final String GREENLIGHT_BASE = "https://api.greenlight.hyundai-ite.com"; // 그린라이트 API URL, 고정값
 
     private static final Set<String> TARGET_URLS = Set.of("/itemPtc"); // 영향도 최소화를 위한 대기열 대상 URL 제한, POC를 위한 임시 세팅값
@@ -36,18 +36,18 @@ public class GreenlightService {
         }
 
         // 토큰 추출
-        String greenlightToken = readQuery(request, TOKEN_QUERY_KEY);
-        if (greenlightToken == null) {
-            greenlightToken = readCookie(request, TOKEN_COOKIE_NAME);
+        String greenlightId = readQuery(request, ID_QUERY_KEY);
+        if (greenlightId == null) {
+            greenlightId = readCookie(request, ID_COOKIE_NAME);
         }
 
         // 토큰이 있다면 검증 시도
-        if (greenlightToken != null && !greenlightToken.isBlank()) {
+        if (greenlightId != null && !greenlightId.isBlank()) {
             // 대기열 대기요청 API 헤더 세팅
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-            headers.add(TOKEN_COOKIE_NAME, greenlightToken); // X-GREENLIGHT-TOKEN 헤더
+            headers.add(ID_COOKIE_NAME, greenlightId); // X-GREENLIGHT-ID 헤더
 
             // 현재 URL 전달
             Map<String, String> body = new HashMap<>();
