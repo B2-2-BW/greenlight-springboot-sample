@@ -47,16 +47,4 @@ public class SampleController {
     public String orderComplete() {
         return "orderComplete";
     }
-  
-    @GetMapping("/event")
-    public String eventPage(
-            @RequestParam("customerId") String customerId,
-            @RequestParam("nextUrl") String nextUrl,
-            Model model
-    ) {
-        System.out.println("test정상>>");
-        model.addAttribute("customerId", customerId);
-        model.addAttribute("nextUrl", nextUrl);
-        return "waitingTmp"; // → WEB-INF/views/event.jsp
-    }
 }
