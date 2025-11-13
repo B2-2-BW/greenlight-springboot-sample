@@ -24,7 +24,7 @@ public class GreenlightService {
     private static final String GREENLIGHT_BASE = "https://api.greenlight.hyundai-ite.com"; // 그린라이트 API URL, 고정값
 
     private static final Set<String> TARGET_URLS = Set.of("/itemPtc"); // 영향도 최소화를 위한 대기열 대상 URL 제한, POC를 위한 임시 세팅값
-    private static final String POC_LANDING_ID = ""; // 제공된 ID 입력, POC를 위한 임시 세팅값
+    private static final String POC_LANDING_ID = "0NFJNJ5B33YZM"; // 제공된 ID 입력, POC를 위한 임시 세팅값
 
     private final RestTemplate restTemplate = new RestTemplate();
 
